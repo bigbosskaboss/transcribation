@@ -12,4 +12,4 @@ RUN unzip vosk-model-spk-0.4.zip && mv vosk-model-spk-0.4 vosk-models
 
 RUN pip install -r ../requirements.txt
 
-CMD [ "python", "manage.py", "runserver" ]
+CMD [ "python", "./manage.py", "runserver", "0.0.0.0:8000" ]
