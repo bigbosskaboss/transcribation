@@ -1,0 +1,29 @@
+{%extends 'main/layout.html'%}
+
+{% block title%}Форма по загрузке файлов{% endblock %}
+
+{% block content%}
+<div class="features">
+    <h1>Редактирование конспектов</h1>
+    <form onsubmit="$('.preloader').removeClass('preloader-remove')" method="post" enctype="multipart/form-data">
+        {% csrf_token%}<br>
+        <div class="mb-3">
+            <div class="metadata">
+                <h3><span class="article-title">{{ article.title }}</span></h3>
+                <p class="article-id">id: {{ article.pk }}</p>
+                <p>WAV-файл: {{article.media}}</p>
+            </div>
+            {{ edit_form|safe }} <br>
+            <audio src="{{ MEDIA_URL }}{{ media_path }}" type="audio/wav" controls></audio><br>
+            <button class="btn btn-success" name="save-article" value="Сохранить конспект"
+                    type="submit" enctype="multipart/form-data">Сохранить конспект</button>
+        </div>
+    </form>
+</div>
+
+
+{% load static %}
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+version: '3'
+
+
+services:
+  stt_service:
+    container_name: vosk_stt_service
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    restart: always

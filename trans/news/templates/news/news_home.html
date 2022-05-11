@@ -1,0 +1,56 @@
+{%extends 'main/layout.html'%}
+
+{% block title%}Все конспекты{%endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Тут будут храниться все конспекты</h1>
+        <button class="btn btn-warning">На страницу про нас</button>
+
+        {%if articles%}
+            {%for el in articles %}
+
+                <div class="alert alert-warning">
+                    <details>
+                        <summary>{{ el.title }}</summary>
+                        <p>id: {{ el.pk }}</p>
+                        <p>WAV-файл: {{el.media}}</p>
+                        {% if not el.doc_url is defined %}
+                        <p><a href="{{ el.doc_url }}" target="_blank">Ссылка на документ</a></p>
+                        {% endif %}
+                        {{ el.text|safe }}
+                        <audio src="{{ MEDIA_URL }}{{ el.media }}" type="audio/wav" controls></audio><br>
+                        <div class="form-container">
+                            <form class="article-form" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <button name="article-edit" type="submit" value="{{ el.pk }}" class="btn btn-secondary"><i class="bi bi-pen"></i></button>
+                            </form>
+                            <form onsubmit="return confirm('Вы действительно хотите удалить конспект?');" class="article-form" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <button name="article-delete" type="submit" value="{{ el.pk }}" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </div>
+
+                    </details>
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <h2>У вас еще нет конспектов!</h2>
+        {% endif %}
+    </div>
+    <script>
+        $('details').click(function (event) {
+                $('details').not(this).removeAttr("open");
+        });
+        function submit() {
+            console.log("Удалить к чертям")
+           return confirm('Вы действительн хотите удалить конспект?');
+        }
+    </script>
+{% endblock %}
+
+
+
+
+
